@@ -27,6 +27,6 @@ public class Main {
         return randomNum;
     }
     public static void main(String[] args){
-        InitUI.initUI();
+        PaperUI.paperUI("刻晴", "初中", 15);
     }
 }

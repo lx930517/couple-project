@@ -19,7 +19,7 @@ import java.util.Properties;
 
 public class RegisterUI {
     public static String saveRandomNum = "";
-    private static JFrame jFrame = new JFrame("注册界面");
+    private static JFrame jFrame = new JFrame("注册账号");
 
     /***
      * @description: 注册界面的UI
@@ -111,7 +111,7 @@ public class RegisterUI {
                     sendEmail(checkCode, emailField.getText());
                 } catch (Exception ex) {
                     ex.printStackTrace();
-                    JOptionPane.showMessageDialog(null, "请输入正确的邮箱！", "警告", JOptionPane.PLAIN_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "请输入正确的邮箱!", "", JOptionPane.PLAIN_MESSAGE);
                 }
             }
         }
@@ -182,7 +182,7 @@ public class RegisterUI {
         // 设置标题
         msg.setSubject(title);
         // 设置内容
-        msg.setContent("【原P科技】" + content + "(QQ邮箱注册验证码)，请尽快完成注册。如非本人操作，请忽略。", "text/html;charset=gbk;");
+        msg.setContent("【远道科技】" + content + "(QQ邮箱注册验证码)，请尽快完成注册。如非本人操作，请忽略。", "text/html;charset=gbk;");
         Transport transport = session.getTransport();
         // 设置服务器以及账号和密码
         transport.connect("smtp.qq.com", sendEmail, sendEmailPwd);
@@ -233,18 +233,18 @@ public class RegisterUI {
         //下面进行逻辑判断
         if ((getCheckCode.length() == 0) || (getName.length() == 0) || (getPassword.length() == 0) ||
                 (getCheckPwd.length() == 0)) {
-            JOptionPane.showMessageDialog(null, "请填写内容！", "警告", JOptionPane.PLAIN_MESSAGE);
+            JOptionPane.showMessageDialog(null, "请填写内容!", "", JOptionPane.PLAIN_MESSAGE);
         } else {
             if (getCheckCode.equals(saveRandomNum) && getPassword.equals(getCheckPwd)) {
                 if (getPassword.matches("^(?![A-Za-z0-9]+$)(?![a-z0-9#?!@$%^&*-.]+$)" +
                         "(?![A-Za-z#?!@$%^&*-.]+$)(?![A-Z0-9#?!@$%^&*-.]+$)[a-zA-Z0-9#?!@$%^&*-.]{6,10}$")) {
-                    JOptionPane.showMessageDialog(null, "注册成功！", "", JOptionPane.PLAIN_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "注册成功!", "", JOptionPane.PLAIN_MESSAGE);
                     DatabaseOperation.InsertIntoUsers(getName, getPassword);
                 } else {
-                    JOptionPane.showMessageDialog(null, "密码格式不正确！", "警告", JOptionPane.PLAIN_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "密码格式不正确!", "", JOptionPane.PLAIN_MESSAGE);
                 }
             } else {
-                JOptionPane.showMessageDialog(null, "验证码或密码有误！", "警告", JOptionPane.PLAIN_MESSAGE);
+                JOptionPane.showMessageDialog(null, "验证码或密码有误!", "", JOptionPane.PLAIN_MESSAGE);
             }
         }
     }

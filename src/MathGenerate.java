@@ -10,6 +10,8 @@ import java.util.Random;
 
 
 public class MathGenerate {
+    // 标志是否出现除以0，根号下负数，tan90的情况，如果有，则重新生成，true表示无，false表示有
+    static boolean isIllegal = false;
     // 下面数学符号对应的等级
     static int[] opPriority = {
             1, 1, 2, 2, 3, 3, 4, 4, 4, -1
@@ -47,6 +49,7 @@ public class MathGenerate {
      * @description :生成单独一个数学题目，本质上是构造这个树
      */
     static Problem generateMath(int operationNum) {
+        isIllegal = false;
         Problem problem = new Problem();
         Random random = new Random();
         int leftOpNum;
@@ -121,9 +124,15 @@ public class MathGenerate {
                 break;
             case "/":
                 assert problem.left != null;
+                if (problem.right.randomValue == 0.0) {
+                    isIllegal = true;
+                }
                 problem.randomValue = problem.left.randomValue / problem.right.randomValue;
                 break;
             case "√":
+                if (problem.right.randomValue < 0) {
+                    isIllegal = true;
+                }
                 problem.randomValue = Math.sqrt(problem.right.randomValue);
                 break;
             case "^2":
@@ -136,6 +145,9 @@ public class MathGenerate {
                 problem.randomValue = Math.cos(Math.toRadians(problem.right.randomValue));
                 break;
             case "tan":
+                if (Math.toRadians(problem.right.randomValue - 90) % 180 == 0) {
+                    isIllegal = true;
+                }
                 problem.randomValue = Math.tan(Math.toRadians(problem.right.randomValue));
                 break;
             default:
@@ -220,19 +232,21 @@ public class MathGenerate {
         String mathStr;
         while (true) {
             Problem problemTemp = generateMath(random.nextInt(3) + 3);
-            mathStr = generateExpression(problemTemp);
-            if (type.equals("小学") && problemTemp.level == 1) {
-                problemInformation.expression = mathStr;
-                problemInformation.answer = problemTemp.randomValue;
-                break;
-            } else if (type.equals("初中") && problemTemp.level == 2) {
-                problemInformation.expression = mathStr;
-                problemInformation.answer = problemTemp.randomValue;
-                break;
-            } else if (type.equals("高中") && problemTemp.level == 3) {
-                problemInformation.expression = mathStr;
-                problemInformation.answer = problemTemp.randomValue;
-                break;
+            if (!isIllegal) {
+                mathStr = generateExpression(problemTemp);
+                if (type.equals("小学") && problemTemp.level == 1) {
+                    problemInformation.expression = mathStr;
+                    problemInformation.answer = problemTemp.randomValue;
+                    break;
+                } else if (type.equals("初中") && problemTemp.level == 2) {
+                    problemInformation.expression = mathStr;
+                    problemInformation.answer = problemTemp.randomValue;
+                    break;
+                } else if (type.equals("高中") && problemTemp.level == 3) {
+                    problemInformation.expression = mathStr;
+                    problemInformation.answer = problemTemp.randomValue;
+                    break;
+                }
             }
         }
         return problemInformation;
@@ -270,9 +284,9 @@ public class MathGenerate {
     public static HashSet<ProblemInformation> generatePaper(String type, int num) {
         HashSet<ProblemInformation> paper = new HashSet<>();
         for (int i = 0; i < num; i++) {
-            while (true){
+            while (true) {
                 ProblemInformation problemInformation = getFinalExpression(type);
-                if(!paper.contains(problemInformation)){
+                if (!paper.contains(problemInformation)) {
                     paper.add(problemInformation);
                     break;
                 }
