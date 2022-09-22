@@ -1,9 +1,15 @@
-import java.sql.*;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.Statement;
+import java.sql.DriverManager;
+
 
 /**
- * @ClassName : DatabaseOperation  //类名
- * @Description : some operations to use database  //描述
- * @Author : Chang //作者
+ * @ClassName : DatabaseOperation                   // 类名
+ * @Description : some operations to use database   // 描述
+ * @Author : Chang                                  // 作者
  * @Date: 2022/9/19  17:06
  */
 
@@ -16,7 +22,7 @@ public class DatabaseOperation {
      * @author Chang
      * @date: 2022/9/19 20:22
      */
-    public static void createUsersTable(){
+    public static void createUsersTable() {
         Connection connection = null;
         Statement statement = null;
         try {
@@ -42,7 +48,7 @@ public class DatabaseOperation {
      * @author Chang
      * @date: 2022/9/22 10:56
      */
-    public static void createMathsTable(){
+    public static void createMathsTable() {
         Connection connection = null;
         Statement statement = null;
         try {
@@ -71,13 +77,13 @@ public class DatabaseOperation {
      * @author Chang
      * @date: 2022/9/19 19:48
      */
-    public static void InsertIntoUsers(String name,String password){
+    public static void InsertIntoUsers(String name,String password) {
         Connection connection = null;
         try {
             Class.forName("org.sqlite.JDBC");
             connection = DriverManager.getConnection("jdbc:sqlite:C:\\Users\\15154\\Desktop\\couple-project\\DatabaseName.db");
             connection.setAutoCommit(false);
-            String sql = "insert into Users(name,password) values (?,?)";
+            String sql = "insert into Users(name,password) values (?, ?)";
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setString(1, name);
             preparedStatement.setString(2, password);
@@ -91,7 +97,6 @@ public class DatabaseOperation {
         }
     }
 
-
     /***
      * @description:  修改密码，存入到数据库中
      * @param: name 用户的名称
@@ -100,7 +105,7 @@ public class DatabaseOperation {
      * @author Chang
      * @date: 2022/9/22 10:56
      */
-    public static void modifyPassword(String name,char[] newPasswordCh){
+    public static void modifyPassword(String name, char[] newPasswordCh) {
         String newPassword = String.valueOf(newPasswordCh);
         Connection connection = null;
         PreparedStatement preparedStatement = null;
@@ -130,7 +135,7 @@ public class DatabaseOperation {
      * @author Chang
      * @date: 2022/9/22 10:57
      */
-    public static boolean checkUserExisted(String name,char[] passwordCh){
+    public static boolean checkUserExisted(String name, char[] passwordCh) {
         String password = String.valueOf(passwordCh);
         Connection connection = null;
         try {
@@ -162,7 +167,7 @@ public class DatabaseOperation {
      * @author 15154
      * @date: 2022/9/22 10:58
      */
-    public static String findUserPassword(String name){
+    public static String findUserPassword(String name) {
         Connection connection = null;
         String str= "";
         try {
@@ -194,9 +199,8 @@ public class DatabaseOperation {
      * @author Chang
      * @date: 2022/9/22 10:59
      */
-    public static void storeMathInDatabase(MathGenerate.ProblemInformation []problemInformations,String type){
-        for(int i = 0;i < problemInformations.length;i++)
-        {
+    public static void storeMathInDatabase(MathGenerate.ProblemInformation []problemInformations, String type) {
+        for(int i = 0;i < problemInformations.length;i++) {
             Connection connection = null;
             try {
                 Class.forName("org.sqlite.JDBC");
@@ -217,6 +221,5 @@ public class DatabaseOperation {
             }
         }
     }
-
 
 }

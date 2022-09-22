@@ -1,9 +1,9 @@
 import java.util.Random;
 
 /**
- * @ClassName : Main  //类名
- * @Description : This is the main interface  //描述
- * @Author : Chang,Liu //作者
+ * @ClassName : Main                            // 类名
+ * @Description : This is the main interface    // 描述
+ * @Author : Chang,Liu                          // 作者
  * @Date: 2022/9/17  23:20
  */
 
@@ -16,11 +16,11 @@ public class Main {
      * @author 15154
      * @date: 2022/9/18 19:22
      */
-    public static String makeRandomNum(){
+    public static String makeRandomNum() {
         Random random = new Random();
         String randomNum = "";
-        for(int i = 0;i < 6;i++){
-            randomNum+=random.nextInt(10);
+        for (int i = 0; i < 6; i++){
+            randomNum += random.nextInt(10);
         }
         return randomNum;
     }
