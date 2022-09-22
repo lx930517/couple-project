@@ -1,6 +1,4 @@
-import javax.swing.*;
 import java.util.Random;
-import java.util.Scanner;
 
 /**
  * @ClassName : Main  //类名
