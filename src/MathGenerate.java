@@ -21,7 +21,6 @@ public class MathGenerate {
             "+", "-", "*", "/", "√", "^2", "sin", "cos", "tan", "none"
     };
 
-
     public static String getOperation() {
         Random random = new Random();
         return operation[random.nextInt(9)];
@@ -124,6 +123,7 @@ public class MathGenerate {
                 break;
             case "/":
                 assert problem.left != null;
+                // 如果出现除以0的情况，则将标志设置为true，用于下面方法中进行判断，以下同理
                 if (problem.right.randomValue == 0.0) {
                     isIllegal = true;
                 }

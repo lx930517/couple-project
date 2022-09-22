@@ -29,61 +29,57 @@ public class RegisterUI {
      * @date: 2022/9/18 19:18
      */
     public static void registerUI() {
-        //注册界面窗口的参数
+        // 注册界面窗口的参数
         jFrame.setSize(800, 450);
         jFrame.setLocationRelativeTo(null);
         jFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        //注册界面的面板
+        // 注册界面的面板
         JPanel jPanel = new JPanel(null);
-
         // 获取窗口的宽度和长度，为组件自适应窗口大小做准备
         int width = jFrame.getWidth();
         int height = jFrame.getHeight();
-        //注册邮箱标签
+        // 注册邮箱标签
         JLabel emailLabel = new JLabel("注册邮箱:");
         emailLabel.setBounds(width / 4, height / 8, width / 10, height / 8);
         emailLabel.setFont(new Font("楷体", Font.ITALIC, 17));
-        //验证码标签
+        // 验证码标签
         JLabel vercodeLabel = new JLabel("验证码:");
         vercodeLabel.setBounds(width / 4, height / 8 + height / 10, width / 10, height / 8);
         vercodeLabel.setFont(new Font("楷体", Font.ITALIC, 17));
-        //昵称标签
+        // 昵称标签
         JLabel nameLabel = new JLabel("昵称:");
         nameLabel.setBounds(width / 4, height / 8 + (height / 10) * 2, width / 10, height / 8);
         nameLabel.setFont(new Font("楷体", Font.ITALIC, 17));
-        //密码标签
+        // 密码标签
         JLabel passwordLabel = new JLabel("密码:");
         passwordLabel.setBounds(width / 4, height / 8 + (height / 10) * 3, width / 10, height / 8);
         passwordLabel.setFont(new Font("楷体", Font.ITALIC, 17));
-        //校验密码标签
+        // 校验密码标签
         JLabel checkLabel = new JLabel("请再次输入密码:");
         checkLabel.setBounds(width / 6, height / 8 + (height / 10) * 4, width / 2, height / 8);
         checkLabel.setFont(new Font("楷体", Font.ITALIC, 17));
-
-        //注册邮箱文本框
+        // 注册邮箱文本框
         JTextField emailField = new JTextField(20);
         emailField.setBounds(width / 2 - width / 8, height / 6 - height / 50, width / 5, height / 15);
-        //验证码文本框,6位数字的验证码
+        // 验证码文本框,6位数字的验证码
         JTextField vercodeField = new JTextField(6);
         vercodeField.setBounds(width / 2 - width / 8, height / 6 - height / 50 + height / 10, width / 5, height / 15);
-        //昵称文本框
+        // 昵称文本框
         JTextField nameField = new JTextField(10);
         nameField.setBounds(width / 2 - width / 8, height / 6 - height / 50 + (height / 10) * 2, width / 5, height / 15);
-        //密码文本框
+        // 密码文本框
         JPasswordField passwordField = new JPasswordField(10);
         passwordField.setBounds(width / 2 - width / 8, height / 6 - height / 50 + (height / 10) * 3, width / 5, height / 15);
-        //校验密码文本框
+        // 校验密码文本框
         JPasswordField checkField = new JPasswordField(10);
         checkField.setBounds(width / 2 - width / 8, height / 6 - height / 50 + (height / 10) * 4, width / 5, height / 15);
-
-        //发送验证码按钮
+        // 发送验证码按钮
         JButton emailButton = new JButton("发送验证码");
         emailButton.setBounds(width / 2 + width / 10, height / 6 - height / 50, width / 8, height / 15);
-        //确认注册按钮
+        // 确认注册按钮
         JButton confirmButton = new JButton("点击注册");
         confirmButton.setBounds(width / 3 - width / 15, height / 2 + height / 6, width / 4 + width / 6, height / 15);
-
-        //将Components添加到panel中
+        // 将Components添加到panel中
         jPanel.add(emailLabel);
         jPanel.add(vercodeLabel);
         jPanel.add(nameLabel);
@@ -96,7 +92,6 @@ public class RegisterUI {
         jPanel.add(checkField);
         jPanel.add(emailButton);
         jPanel.add(confirmButton);
-
         jFrame.add(jPanel);
         jFrame.setVisible(true);
 
@@ -115,7 +110,7 @@ public class RegisterUI {
                 }
             }
         }
-        //将发送验证码按钮加入到事件监听
+        // 将发送验证码按钮加入到事件监听
         emailButton.addActionListener(new emailButtonHandler());
 
         // 按下点击注册按钮，如果验证码不规范或者密码不规范，用户重新进行校验；如果都符合规范，则显示注册成功，并将用户添加到数据库中

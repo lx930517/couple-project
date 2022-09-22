@@ -26,7 +26,15 @@ public class Main {
         }
         return randomNum;
     }
+
+    /***
+     * @description:  程序的入口，无需多言
+     * @param: args
+     * @return: void
+     * @author 15154
+     * @date: 2022/9/22 11:09
+     */
     public static void main(String[] args){
-        PaperUI.paperUI("刻晴", "初中", 15);
+        InitUI.initUI();
     }
 }

@@ -29,7 +29,6 @@ public class InitUI {
         // 获取jFrame的宽度和高度，便于设置其他组件的尺寸
         int width = jFrame.getWidth();
         int height = jFrame.getHeight();
-
         //账号文本框
         JTextField userField = new JTextField(20);
         userField.setBounds(width/3, height/4, width/3, height/10);
@@ -44,7 +43,6 @@ public class InitUI {
         JLabel passwordLabel = new JLabel("密码：");
         passwordLabel.setBounds(width/5, height/4+height/10, width/6, height/8);
         passwordLabel.setFont(new Font("宋体", Font.ITALIC, 20));
-
         //注册账号按钮
         JButton btnReg = new JButton("注册账号");
         btnReg.setBounds(width/15, height/2+height/4, width/8, height/10);
@@ -54,7 +52,6 @@ public class InitUI {
         //修改密码按钮
         JButton btnChange = new JButton("忘记密码");
         btnChange.setBounds(width-width/5, height/2+height/4, width/8, height/10);
-
         //将Components添加到面板中
         initPanel.add(btnReg);
         initPanel.add(btnLog);
@@ -72,7 +69,7 @@ public class InitUI {
          * @description:  点击注册按钮时的相应事件，转到注册界面的UI
          * @param:
          * @return: void
-         * @author 15154
+         * @author Chang
          * @date: 2022/9/21 19:48
          */
         class btnRegHandler implements ActionListener {
@@ -86,7 +83,7 @@ public class InitUI {
          * @description:  点击登录按钮的相应事件：如果在数据库里面搜索用户，用户不存在，则会弹出警告；成功则转到出题界面的UI
          * @param:
          * @return: void
-         * @author 15154
+         * @author Chang
          * @date: 2022/9/21 19:49
          */
         class btnLogHandler implements ActionListener {
@@ -107,7 +104,7 @@ public class InitUI {
          * @description:  点击找回密码的响应事件，转到找回密码的UI
          * @param:
          * @return: void
-         * @author 15154
+         * @author Chang
          * @date: 2022/9/21 19:34
          */
         class btnChangeHandler implements ActionListener {
@@ -126,7 +123,7 @@ public class InitUI {
          * @description: 窗口的大小改变后，各个组件的大小会随之改变
          * @param:
          * @return: void
-         * @author 15154
+         * @author Chang
          * @date: 2022/9/21 19:38
          */
         jFrame.addComponentListener(new ComponentAdapter() {
@@ -140,9 +137,7 @@ public class InitUI {
                 btnReg.setBounds(widthChange/15, heightChange/2+heightChange/4, widthChange/8, heightChange/10);
                 btnLog.setBounds(widthChange/3, heightChange/2, widthChange/3, heightChange/10);
                 btnChange.setBounds(widthChange-widthChange/5, heightChange/2+heightChange/4, widthChange/8, heightChange/10);
-
             }
-
         });
     }
 }

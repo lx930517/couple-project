@@ -23,6 +23,15 @@ public class PaperUI {
     // 标志用户是否答到最后一题
     static boolean ifFinish;
 
+    /***
+     * @description:
+     * @param: name 用户的姓名
+    selectLevel 用户选择的出题等级
+    questionNum 用户选择的出题数
+     * @return: void
+     * @author Chang
+     * @date: 2022/9/22 12:17
+     */
     public static void paperUI(String name,String selectLevel, int questionNum) {
         // 初始化，便于后续的操作
         score = 0;
@@ -36,7 +45,7 @@ public class PaperUI {
         paperHash.toArray(paper);
         // 四个选项的保存数组
         String[] answers = assignAnswer(paper);
-        // DatabaseOperation.storeMathInDatabase(paper,selectLevel);
+        DatabaseOperation.storeMathInDatabase(paper,selectLevel);
         JFrame jFrame = new JFrame("您正在答题!");
         JPanel jPanel = new JPanel(null);
         jFrame.setSize(800, 450);
@@ -95,9 +104,20 @@ public class PaperUI {
         jPanel.add(btnNext);
         jFrame.add(jPanel);
         jFrame.setVisible(true);
+
+        /***
+         * @description: 按下"下一题"按钮时候的相应事件
+         * @param: name 用户的名字
+        selectLevel 用户选择的等级
+        questionNum 用户选择的出题数
+         * @return: void
+         * @author Chang
+         * @date: 2022/9/22 12:17
+         */
         class btnNextHandler implements ActionListener {
             @Override
             public void actionPerformed(ActionEvent e) {
+                // 首先对是否到最后一道题进行判断，如果没有到最后一道题的界面，则首先计算上一道题的得分，并将界面更换成新题
                 if(!ifFinish){
                     String answerSelected = "";
                     for (Component component : jPanel.getComponents()) {
@@ -107,11 +127,13 @@ public class PaperUI {
                             }
                         }
                     }
+                    // 记录每一道题的得分，并将总分累加
                     if (answerSelected.equals(String.valueOf(paper[index].answer))) {
                         score += singleScore;
                     }
-                    System.out.println(score);
+                    // 下标自加1，跳转到下一道题
                     index++;
+                    // 如果已经到最后一道题，则将按钮更换成”提交“的字样
                     if (index == questionNum - 1) {
                         String[] answers = assignAnswer(paper);
                         System.out.println(index);
@@ -132,6 +154,7 @@ public class PaperUI {
                         radioButtonD.setText(answers[3]);
                     }
                 }
+                // 已经到最后一道题，并且此时按钮名字为"提交"，那么记录最后一道题的得分情况，累加到总分中，然后跳转到finishUI
                 else {
                     String answerSelected = "";
                     for (Component component : jPanel.getComponents()) {
@@ -167,6 +190,13 @@ public class PaperUI {
         });
     }
 
+    /***
+     * @description: 生成四个选线，其中只有一个选项是标准答案，其它答案为在原选项上加随机数
+     * @param: problemInformations 题目信息
+     * @return: java.lang.String[] 返回答案数组
+     * @author Chang
+     * @date: 2022/9/22 12:22
+     */
     private static String[] assignAnswer(MathGenerate.ProblemInformation[] problemInformations) {
         String[] answers = new String[4];
         Random random = new Random();
@@ -174,12 +204,19 @@ public class PaperUI {
         answers[rightIndex] = String.valueOf(problemInformations[index].answer);
         for (int i = 0; i < 4; i++) {
             if (i != rightIndex) {
-                answers[i] = String.valueOf(problemInformations[index].answer + random.nextDouble(2) + 5);
+                answers[i] = String.valueOf(problemInformations[index].answer + random.nextDouble(2.0) + 5.0);
             }
         }
         return answers;
     }
 
+    /***
+     * @description:  完成界面的UI，此时可以选择继续出题或者退出系统
+     * @param: name 用户的名字
+     * @return: void
+     * @author Chang
+     * @date: 2022/9/22 12:23
+     */
     public static void finishUI(String name){
         JFrame jFrame = new JFrame("您已经完成作答");
         JPanel jPanel = new JPanel(null);

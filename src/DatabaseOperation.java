@@ -1,10 +1,9 @@
-import javax.swing.*;
 import java.sql.*;
 
 /**
  * @ClassName : DatabaseOperation  //类名
  * @Description : some operations to use database  //描述
- * @Author : 15154 //作者
+ * @Author : Chang //作者
  * @Date: 2022/9/19  17:06
  */
 
@@ -14,7 +13,7 @@ public class DatabaseOperation {
      * @description:  用于系统初始化创建用户表，创建一次就可以了
      * @param:
      * @return: void
-     * @author 15154
+     * @author Chang
      * @date: 2022/9/19 20:22
      */
     public static void createUsersTable(){
@@ -36,6 +35,13 @@ public class DatabaseOperation {
         }
     }
 
+    /***
+     * @description:  在生成Maths表的时候需要调用此函数，因为本地先运行过，所以就无需调用了
+     * @param:
+     * @return: void
+     * @author Chang
+     * @date: 2022/9/22 10:56
+     */
     public static void createMathsTable(){
         Connection connection = null;
         Statement statement = null;
@@ -59,10 +65,10 @@ public class DatabaseOperation {
 
     /***
      * @description:  向数据库中添加注册的用户
-     * @param: name
-    password
+     * @param: name 用户的名称
+    password 用户的密码
      *@return: void
-     * @author 15154
+     * @author Chang
      * @date: 2022/9/19 19:48
      */
     public static void InsertIntoUsers(String name,String password){
@@ -86,6 +92,14 @@ public class DatabaseOperation {
     }
 
 
+    /***
+     * @description:  修改密码，存入到数据库中
+     * @param: name 用户的名称
+    newPasswordCh 新密码
+     * @return: void
+     * @author Chang
+     * @date: 2022/9/22 10:56
+     */
     public static void modifyPassword(String name,char[] newPasswordCh){
         String newPassword = String.valueOf(newPasswordCh);
         Connection connection = null;
@@ -108,7 +122,14 @@ public class DatabaseOperation {
         }
     }
 
-
+    /***
+     * @description:  检查用户是否存在，根据用户的名称和密码进行数据库检索
+     * @param: name 用户的名称
+    passwordCh 用户的密码
+     * @return: boolean
+     * @author Chang
+     * @date: 2022/9/22 10:57
+     */
     public static boolean checkUserExisted(String name,char[] passwordCh){
         String password = String.valueOf(passwordCh);
         Connection connection = null;
@@ -134,6 +155,13 @@ public class DatabaseOperation {
         }
     }
 
+    /***
+     * @description:  根据用户的名字，找到用户的原密码
+     * @param: name 用户的名称
+     * @return: java.lang.String
+     * @author 15154
+     * @date: 2022/9/22 10:58
+     */
     public static String findUserPassword(String name){
         Connection connection = null;
         String str= "";
@@ -158,6 +186,14 @@ public class DatabaseOperation {
         return str;
     }
 
+    /***
+     * @description:  将生成的数学题存到数据库中，虽然本次项目没有用到，但是便于以后项目的拓展：例如查看往年试题
+     * @param: problemInformations 保存数学题的题目和答案
+    type 数学的类型：小学、初中、高中
+     * @return: void
+     * @author Chang
+     * @date: 2022/9/22 10:59
+     */
     public static void storeMathInDatabase(MathGenerate.ProblemInformation []problemInformations,String type){
         for(int i = 0;i < problemInformations.length;i++)
         {

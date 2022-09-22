@@ -1,4 +1,3 @@
-import javax.imageio.plugins.tiff.BaselineTIFFTagSet;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -21,7 +20,6 @@ public class SelectUI {
         jFrame.setLocationRelativeTo(null);
         jFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         JPanel jPanel = new JPanel(null);
-
         int width = jFrame.getWidth();
         int height = jFrame.getHeight();
         // 创建小学、初中、高中三个单选按钮
@@ -38,11 +36,11 @@ public class SelectUI {
         buttonGroup.add(radioButtonPrimary);
         buttonGroup.add(radioButtonJunior);
         buttonGroup.add(radioButtonHigh);
-        //生成题目数量标签
+        // 生成题目数量标签
         JLabel jLabelQuestionNum = new JLabel("请选择成的题目数量(10-30)");
         jLabelQuestionNum.setFont(new Font("楷体",Font.PLAIN,20));
         jLabelQuestionNum.setBounds(width/3, height/4, width/3, height/4);
-        //设置文本框，选择出题数目
+        // 设置文本框，选择出题数目
         JTextField jTextFieldNum = new JTextField(2);
         jTextFieldNum.setBounds(width/2-width/9, height/2, width/6, height/15);
         // 设置重置密码的按钮
@@ -61,7 +59,6 @@ public class SelectUI {
         jPanel.add(btnConfirmNum);
         jFrame.setContentPane(jPanel);
         jFrame.setVisible(true);
-
 
         // 将点击注册按钮加入相应的事件监听功能
         class btnResetHandler implements ActionListener {
@@ -117,13 +114,19 @@ public class SelectUI {
         });
     }
 
+    /***
+     * @description:  重新设置密码的UI界面
+     * @param: name 用户的名字
+     * @return: void
+     * @author Chang
+     * @date: 2022/9/22 12:26
+     */
     public static void resetPasswordUI(String name) {
         JFrame jFrameReset = new JFrame("重新设置密码");
         jFrameReset.setSize(800, 450);
         jFrameReset.setLocationRelativeTo(null);
         jFrameReset.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         JPanel jPanel = new JPanel(null);
-
         // 获取窗口的长度和宽度，为组件自适应大小做准备
         int width = jFrameReset.getWidth();
         int height = jFrameReset.getHeight();
@@ -137,7 +140,6 @@ public class SelectUI {
         jLabelNewPwd.setFont(new Font("楷体",Font.ITALIC,20));
         jLabelCheckPwd.setBounds(width/4-width/20, height/8+height/3, width/4, height/10);
         jLabelCheckPwd.setFont(new Font("楷体",Font.ITALIC,20));
-
         // 原始密码、新密码、确认新密码的密码框
         JPasswordField jPasswordFieldInit = new JPasswordField(10);
         JPasswordField jPasswordFieldNew = new JPasswordField(10);
@@ -145,11 +147,9 @@ public class SelectUI {
         jPasswordFieldInit.setBounds(width/4+width/8, height/7, width/4, height/15);
         jPasswordFieldNew.setBounds(width/4+width/8, height/7+height/6, width/4, height/15);
         jPasswordFieldCheck.setBounds(width/4+width/8, height/7+height/3, width/4, height/15);
-
         // 确认修改按钮
         JButton btnConfirm = new JButton("确认修改");
         btnConfirm.setBounds(width/4+width/15, height/3+height/3, width/3, height/15);
-
         jPanel.add(jLabelInitPwd);
         jPanel.add(jLabelNewPwd);
         jPanel.add(jLabelCheckPwd);
@@ -159,7 +159,6 @@ public class SelectUI {
         jPanel.add(btnConfirm);
         jFrameReset.add(jPanel);
         jFrameReset.setVisible(true);
-
 
         // 点击修改密码按钮后的相应事件
         class btnConfirmHandler implements ActionListener {
@@ -201,6 +200,14 @@ public class SelectUI {
         });
     }
 
+    /***
+     * @description:  检查密码格式是否正确
+     * @param: passwordCh 新密码
+    checkPasswordCh  再次输入的密码
+     * @return: boolean
+     * @author Chang
+     * @date: 2022/9/22 12:27
+     */
     private static boolean checkPasswordFormat(char[] passwordCh, char[] checkPasswordCh) {
         String password = String.valueOf(passwordCh);
         String checkPassword = String.valueOf(checkPasswordCh);
