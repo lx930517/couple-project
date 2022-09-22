@@ -70,7 +70,7 @@ public class SelectUI {
         }
         btnReset.addActionListener(new btnResetHandler());
 
-        // 将确认生成蒂姆按钮加入相应的事件监听
+        // 将确认生成密码按钮加入相应的事件监听
         class btnConfirmNumHandler implements ActionListener {
             String levelSelected = "";
             @Override
@@ -89,7 +89,7 @@ public class SelectUI {
                             }
                         }
                         jFrame.setVisible(false);
-                        PaperUI.paperUI(levelSelected);
+                        PaperUI.paperUI(name,levelSelected,questionNum);
                     }
                     else {
                         JOptionPane.showMessageDialog(null, "请输入正确的题目数量！", "WARN!", JOptionPane.PLAIN_MESSAGE);

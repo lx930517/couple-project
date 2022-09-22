@@ -36,6 +36,27 @@ public class DatabaseOperation {
         }
     }
 
+    public static void createMathsTable(){
+        Connection connection = null;
+        Statement statement = null;
+        try {
+            Class.forName("org.sqlite.JDBC");
+            connection = DriverManager.getConnection("jdbc:sqlite:C:\\Users\\15154\\Desktop\\couple-project\\DatabaseName.db");
+            statement = connection.createStatement();
+            String sql = "CREATE TABLE Maths " +
+                    "(Expression Text PRIMARY KEY  NOT NULL," +
+                    " Level  Text NOT NULL," +
+                    " Answer REAl NOT NULL" +
+                    ")";
+            statement.executeUpdate(sql);
+            statement.close();
+            connection.close();
+        } catch ( Exception e ) {
+            System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+            System.exit(0);
+        }
+    }
+
     /***
      * @description:  向数据库中添加注册的用户
      * @param: name
@@ -137,6 +158,29 @@ public class DatabaseOperation {
         return str;
     }
 
+    public static void storeMathInDatabase(MathGenerate.ProblemInformation []problemInformations,String type){
+        for(int i = 0;i < problemInformations.length;i++)
+        {
+            Connection connection = null;
+            try {
+                Class.forName("org.sqlite.JDBC");
+                connection = DriverManager.getConnection("jdbc:sqlite:C:\\Users\\15154\\Desktop\\couple-project\\DatabaseName.db");
+                connection.setAutoCommit(false);
+                String sql = "insert or ignore  into Maths(Expression,Level,Answer) values (?,?,?)";
+                PreparedStatement preparedStatement = connection.prepareStatement(sql);
+                preparedStatement.setString(1, problemInformations[i].expression);
+                preparedStatement.setString(2, type);
+                preparedStatement.setDouble(3, problemInformations[i].answer);
+                preparedStatement.executeUpdate();
+                preparedStatement.close();
+                connection.commit();
+                connection.close();
+            } catch (SQLException | ClassNotFoundException e) {
+                System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+                System.exit(0);
+            }
+        }
+    }
 
 
 }

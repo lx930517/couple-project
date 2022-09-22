@@ -2,10 +2,12 @@ import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import java.util.Properties;
-import java.util.Random;
 
 /**
  * @ClassName : RegisterUI  //类名
@@ -16,7 +18,7 @@ import java.util.Random;
 
 
 public class RegisterUI {
-    public static String saveRandomNum="";
+    public static String saveRandomNum = "";
     private static JFrame jFrame = new JFrame("注册界面");
 
     /***
@@ -28,51 +30,58 @@ public class RegisterUI {
      */
     public static void registerUI() {
         //注册界面窗口的参数
-        jFrame.setSize(647, 400);
+        jFrame.setSize(800, 450);
         jFrame.setLocationRelativeTo(null);
         jFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-
         //注册界面的面板
         JPanel jPanel = new JPanel(null);
 
+        // 获取窗口的宽度和长度，为组件自适应窗口大小做准备
+        int width = jFrame.getWidth();
+        int height = jFrame.getHeight();
         //注册邮箱标签
         JLabel emailLabel = new JLabel("注册邮箱:");
-        emailLabel.setBounds(150, 50, 80, 50);
+        emailLabel.setBounds(width / 4, height / 8, width / 10, height / 8);
+        emailLabel.setFont(new Font("楷体", Font.ITALIC, 17));
         //验证码标签
         JLabel vercodeLabel = new JLabel("验证码:");
-        vercodeLabel.setBounds(150, 100, 50, 50);
+        vercodeLabel.setBounds(width / 4, height / 8 + height / 10, width / 10, height / 8);
+        vercodeLabel.setFont(new Font("楷体", Font.ITALIC, 17));
         //昵称标签
         JLabel nameLabel = new JLabel("昵称:");
-        nameLabel.setBounds(150, 150, 50, 50);
+        nameLabel.setBounds(width / 4, height / 8 + (height / 10) * 2, width / 10, height / 8);
+        nameLabel.setFont(new Font("楷体", Font.ITALIC, 17));
         //密码标签
         JLabel passwordLabel = new JLabel("密码:");
-        passwordLabel.setBounds(150, 200, 50, 50);
+        passwordLabel.setBounds(width / 4, height / 8 + (height / 10) * 3, width / 10, height / 8);
+        passwordLabel.setFont(new Font("楷体", Font.ITALIC, 17));
         //校验密码标签
-        JLabel checkLabel = new JLabel("请再次输入密码");
-        checkLabel.setBounds(150, 250, 100, 50);
+        JLabel checkLabel = new JLabel("请再次输入密码:");
+        checkLabel.setBounds(width / 6, height / 8 + (height / 10) * 4, width / 2, height / 8);
+        checkLabel.setFont(new Font("楷体", Font.ITALIC, 17));
 
         //注册邮箱文本框
         JTextField emailField = new JTextField(20);
-        emailField.setBounds(250, 50, 150, 30);
+        emailField.setBounds(width / 2 - width / 8, height / 6 - height / 50, width / 5, height / 15);
         //验证码文本框,6位数字的验证码
         JTextField vercodeField = new JTextField(6);
-        vercodeField.setBounds(250, 100, 80, 30);
+        vercodeField.setBounds(width / 2 - width / 8, height / 6 - height / 50 + height / 10, width / 5, height / 15);
         //昵称文本框
         JTextField nameField = new JTextField(10);
-        nameField.setBounds(250, 150, 80, 30);
+        nameField.setBounds(width / 2 - width / 8, height / 6 - height / 50 + (height / 10) * 2, width / 5, height / 15);
         //密码文本框
         JPasswordField passwordField = new JPasswordField(10);
-        passwordField.setBounds(250, 200, 80, 30);
+        passwordField.setBounds(width / 2 - width / 8, height / 6 - height / 50 + (height / 10) * 3, width / 5, height / 15);
         //校验密码文本框
         JPasswordField checkField = new JPasswordField(10);
-        checkField.setBounds(250, 250, 80, 30);
+        checkField.setBounds(width / 2 - width / 8, height / 6 - height / 50 + (height / 10) * 4, width / 5, height / 15);
 
         //发送验证码按钮
         JButton emailButton = new JButton("发送验证码");
-        emailButton.setBounds(500, 50, 150, 30);
+        emailButton.setBounds(width / 2 + width / 10, height / 6 - height / 50, width / 8, height / 15);
         //确认注册按钮
         JButton confirmButton = new JButton("点击注册");
-        confirmButton.setBounds(250,300,150,30);
+        confirmButton.setBounds(width / 3 - width / 15, height / 2 + height / 6, width / 4 + width / 6, height / 15);
 
         //将Components添加到panel中
         jPanel.add(emailLabel);
@@ -92,14 +101,14 @@ public class RegisterUI {
         jFrame.setVisible(true);
 
 
-       // 按下发送验证码按钮的响应事件
+        // 按下发送验证码按钮的响应事件
         class emailButtonHandler implements ActionListener {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String checkCode = Main.makeRandomNum();
                 saveRandomNum = checkCode;
                 try {
-                    sendEmail(checkCode,emailField.getText());
+                    sendEmail(checkCode, emailField.getText());
                 } catch (Exception ex) {
                     ex.printStackTrace();
                     JOptionPane.showMessageDialog(null, "请输入正确的邮箱！", "警告", JOptionPane.PLAIN_MESSAGE);
@@ -113,14 +122,37 @@ public class RegisterUI {
         class confirmButtonHandler implements ActionListener {
             @Override
             public void actionPerformed(ActionEvent e) {
-                verifyRegister(vercodeField.getText(),nameField.getText(),passwordField.getPassword(),checkField.getPassword());
+                verifyRegister(vercodeField.getText(), nameField.getText(), passwordField.getPassword(), checkField.getPassword());
+                InitUI.initUI();
             }
         }
         confirmButton.addActionListener(new confirmButtonHandler());
+        jFrame.addComponentListener(new ComponentAdapter() {
+            public void componentResized(ComponentEvent e) {
+                int widthChange = jFrame.getWidth();
+                int heightChange = jFrame.getHeight();
+                emailLabel.setBounds(widthChange / 4, heightChange / 8, widthChange / 10, heightChange / 8);
+                vercodeLabel.setBounds(widthChange / 4, heightChange / 8 + heightChange / 10, widthChange / 10, heightChange / 8);
+                nameLabel.setBounds(widthChange / 4, heightChange / 8+(heightChange/10)*2, widthChange / 10, heightChange / 8);
+                passwordLabel.setBounds(widthChange / 4, heightChange / 8 + (heightChange / 10)*3, widthChange / 10, heightChange / 8);
+                checkLabel.setBounds(widthChange / 6, heightChange / 8+ (heightChange / 10)*4, widthChange / 2, heightChange / 8);
+
+                emailField.setBounds(widthChange / 2 -widthChange/8, heightChange / 6-heightChange/50, widthChange / 5, heightChange / 15);
+                vercodeField.setBounds(widthChange / 2 -widthChange/8, heightChange / 6-heightChange/50+heightChange/10, widthChange / 5, heightChange / 15);
+                nameField.setBounds(widthChange / 2 -widthChange/8, heightChange / 6-heightChange/50+(heightChange/10)*2,widthChange / 5, heightChange / 15);
+                passwordField.setBounds(widthChange / 2 -widthChange/8, heightChange / 6-heightChange/50+(heightChange/10)*3, widthChange / 5, heightChange / 15);
+                checkField.setBounds(widthChange / 2 -widthChange/8, heightChange / 6-heightChange/50+(heightChange/10)*4, widthChange / 5, heightChange / 15);
+
+                emailButton.setBounds(widthChange / 2 + widthChange / 10, heightChange / 6 - heightChange / 50, widthChange / 8, heightChange / 15);
+                confirmButton.setBounds(widthChange / 3 - widthChange / 15, heightChange / 2 + heightChange / 6, widthChange / 4 + widthChange / 6, heightChange / 15);
+            }
+
+        });
+
     }
 
     /***
-     * @description:  做发送邮件的一些系统配置工作
+     * @description: 做发送邮件的一些系统配置工作
      * @param: sendEmail
     sendEmailPwd
     title
@@ -130,8 +162,8 @@ public class RegisterUI {
      * @author 15154
      * @date: 2022/9/18 19:00
      */
-    public static void deployEmail(String sendEmail,String sendEmailPwd,String title,String content,
-                                   String toEmailAddress) throws Exception{
+    public static void deployEmail(String sendEmail, String sendEmailPwd, String title, String content,
+                                   String toEmailAddress) throws Exception {
         Properties props = new Properties();
         // 开启debug调试，以便在控制台查看
         props.setProperty("mail.debug", "true");
@@ -150,14 +182,14 @@ public class RegisterUI {
         // 设置标题
         msg.setSubject(title);
         // 设置内容
-        msg.setContent("【原P科技】"+content+"(QQ邮箱注册验证码)，请尽快完成注册。如非本人操作，请忽略。", "text/html;charset=gbk;");
+        msg.setContent("【原P科技】" + content + "(QQ邮箱注册验证码)，请尽快完成注册。如非本人操作，请忽略。", "text/html;charset=gbk;");
         Transport transport = session.getTransport();
         // 设置服务器以及账号和密码
         transport.connect("smtp.qq.com", sendEmail, sendEmailPwd);
         // 发送到的邮箱地址
-        transport.sendMessage(msg,new Address[]{new InternetAddress(toEmailAddress)});
+        transport.sendMessage(msg, new Address[]{new InternetAddress(toEmailAddress)});
 
-        if(transport!=null){
+        if (transport != null) {
             try {
                 transport.close();
             } catch (MessagingException e) {
@@ -167,20 +199,20 @@ public class RegisterUI {
     }
 
     /***
-     * @description:  实现发送验证码的功能
+     * @description: 实现发送验证码的功能
      * @param: checkCode 6位的验证码
     toEmailAddress 接受验证码信息的邮箱
      * @return: void
      * @author 15154
      * @date: 2022/9/18 20:34
      */
-    public static void sendEmail(String checkCode,String toEmailAddress) throws Exception{
-        deployEmail("1515479725@qq.com","nhzbjjmnifuxhhfc","Email Message" ,
-               checkCode,toEmailAddress);
+    public static void sendEmail(String checkCode, String toEmailAddress) throws Exception {
+        deployEmail("1515479725@qq.com", "nhzbjjmnifuxhhfc", "Email Message",
+                checkCode, toEmailAddress);
     }
 
     /***
-     * @description:  校验验证码和密码格式是否正确
+     * @description: 校验验证码和密码格式是否正确
      * @param: checkCode
     name
     password
@@ -189,7 +221,7 @@ public class RegisterUI {
      * @author 15154
      * @date: 2022/9/19 15:55
      */
-    private static void verifyRegister(String checkCode,String name,char[] password,char[] checkPassword) {
+    private static void verifyRegister(String checkCode, String name, char[] password, char[] checkPassword) {
         // 获取传进来的参数
         String getCheckCode = checkCode;
         String getName = name;

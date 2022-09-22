@@ -12,14 +12,13 @@ import java.awt.event.ActionListener;
 
 public class FindPasswordUI {
     public static String saveRandomNum = "";
-    private static JFrame jFrame = new JFrame("修改密码");
+    private static JFrame jFrame = new JFrame("忘记密码");
 
     public static void findPasswordUI() {
         //修改密码窗口的参数
-        jFrame.setSize(647, 400);
+        jFrame.setSize(800, 450);
         jFrame.setLocationRelativeTo(null);
         jFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-
         //修改密码的面板
         JPanel jPanel = new JPanel(null);
 
@@ -29,15 +28,16 @@ public class FindPasswordUI {
         //验证码标签
         JLabel vercodeLabel = new JLabel("验证码:");
         vercodeLabel.setBounds(150, 100, 50, 50);
+        //昵称标签
+        JLabel nameLabel = new JLabel("您的昵称:");
+        nameLabel.setBounds(150, 250, 100, 30);
         //密码标签
         JLabel passwordLabel = new JLabel("新密码:");
         passwordLabel.setBounds(150, 150, 50, 50);
         //校验密码标签
         JLabel checkLabel = new JLabel("请确认新密码:");
         checkLabel.setBounds(150, 200, 100, 50);
-        //昵称标签
-        JLabel nameLabel = new JLabel("您的昵称:");
-        nameLabel.setBounds(150, 250, 100, 30);
+
 
         //注册邮箱文本框
         JTextField emailField = new JTextField(20);
@@ -45,15 +45,16 @@ public class FindPasswordUI {
         //验证码文本框,6位数字的验证码
         JTextField vercodeField = new JTextField(6);
         vercodeField.setBounds(250, 100, 80, 30);
+        //昵称文本框
+        JTextField nameField = new JTextField(10);
+        nameField.setBounds(250, 250, 80, 30);
         //新密码文本框
         JPasswordField passwordField = new JPasswordField(10);
         passwordField.setBounds(250, 150, 80, 30);
         //校验密码文本框
         JPasswordField checkField = new JPasswordField(10);
         checkField.setBounds(250, 200, 80, 30);
-        //昵称文本框
-        JTextField nameField = new JTextField(10);
-        nameField.setBounds(250, 250, 80, 30);
+
 
         //发送验证码按钮
         JButton emailButton = new JButton("发送验证码");
@@ -65,13 +66,13 @@ public class FindPasswordUI {
         //将Components添加到panel中
         jPanel.add(emailLabel);
         jPanel.add(vercodeLabel);
+        jPanel.add(nameLabel);
         jPanel.add(passwordLabel);
         jPanel.add(checkLabel);
-        jPanel.add(nameLabel);
         jPanel.add(emailField);
         jPanel.add(vercodeField);
-        jPanel.add(passwordField);
         jPanel.add(nameField);
+        jPanel.add(passwordField);
         jPanel.add(checkField);
         jPanel.add(emailButton);
         jPanel.add(confirmButton);
